@@ -2,6 +2,8 @@
 
 This is a follow-along project from web development, simplified to help me better understand the workflow in a React project made with typescript.
 
+[see the tutorial here](https://www.youtube.com/watch?v=bAJlYgeovlg)
+
 
 It is also my first exposure to using vite instead of create-react-app, and wow is it way snappier in comparison. I don't think I'll be going back without good reason.
 

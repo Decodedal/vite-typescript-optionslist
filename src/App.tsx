@@ -1,4 +1,10 @@
 import Select from "./Select"
+import React, {useState} from "react"
+
+type SelectOption = {
+  label:string;
+  value:string|number;
+}
 
 const options =[
   {label:"first", value:1},
@@ -10,10 +16,11 @@ const options =[
 
 function App() {
 
+  const [value, setValue] = useState<SelectOption|undefined>(options[0])
+
   return (
     <div>
-      <h1>Hello from vite and typescript</h1>
-      <Select options={options}/>
+      <Select options={options} value={value} onChange={setValue}/>
     </div>
   )
 }

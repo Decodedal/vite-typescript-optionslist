@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from "./select.module.css"
 
 type SelectOption = {
     label:string;
-    value:string;
+    value:string|number;
 }
 
 type SelectProps ={
@@ -14,24 +14,43 @@ onChange:(value: SelectOption | undefined) => void
 }
 
 const Select = ({value, onChange, options}: SelectProps) => {
-  return (
+
+    const [isOpen, setIsOpen] = useState<Boolean>(false)
+
+    const clearOptions = (): void =>{
+        onChange(undefined)
+    }
     
-    <div className={styles.container}>
-        <span className={styles.value}>
-            <button className={styles["clear-btn"]}>&times;</button>
-            <div className={styles.caret}></div>
-            <ul className={styles.options}>
+    const selectOption = (option: SelectOption)=>{
+        onChange(option)
+    }
+
+  return (
+
+  
+    <div onBlur={() => setIsOpen(false)} onClick={()=> setIsOpen(!isOpen)} tabIndex={0} className={styles.container}>
+        <span className={styles.value}>{value?.label}</span>
+            <button className={styles["clear-btn"]} onClick={(e) =>{
+                e.stopPropagation()
+                clearOptions()
+            }}>&times;</button>
+            <div className={styles.divider}></div>
+            <div className={styles.caret}>⬇️</div>
+            <ul className={`${styles.options} ${isOpen ? styles.show : ""}`}>
                 {
                     options.map(option =>{
                         return(
-                            <li key={option.value}>
+                            <li onClick={() =>{
+                                // e.stopPropagation()
+                                selectOption(option)
+                                setIsOpen(false)
+                            }} key={option.value} className={styles.option}>
                                 {option.label}
                             </li>
                         )
                     })
                 }
             </ul>
-        </span>
     </div>
  
   )
